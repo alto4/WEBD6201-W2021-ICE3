@@ -41,9 +41,9 @@ class Contact {
      */
     constructor(fullName = "", contactNumber = "", emailAddress = "") 
     {
-      this.m_fullName = fullName;
-      this.m_contactNumber = contactNumber;
-      this.m_emailAddress = emailAddress;
+      this.FullName = fullName;
+      this.ContactNumber = contactNumber;
+      this.EmailAddress = emailAddress;
     }
 
     // methods
@@ -55,7 +55,7 @@ class Contact {
      */
     toString() 
     {
-      return `Full Name     : ${this.m_fullName} \nContact Number: ${this.m_contactNumber}\nEmail Address : ${this.m_emailAddress}`;
+      return `Full Name     : ${this.FullName} \nContact Number: ${this.ContactNumber}\nEmail Address : ${this.EmailAddress}`;
     }
 
     /**
@@ -66,9 +66,9 @@ class Contact {
     toJSON()
     {
       return {
-        "fullName": this.fullName,
-        "contactNumber": this.contactNumber,
-        "emailAddress": this.emailAddress
+        "fullName": this.FullName,
+        "contactNumber": this.ContactNumber,
+        "emailAddress": this.EmailAddress
       }
     }
 
@@ -79,7 +79,15 @@ class Contact {
      */
     serialize()
     {
-      return `${this.m_fullName},${this.m_contactNumber},${this.m_emailAddress}`;
+      if(this.FullName !== "" && this.ContactNumber !== "" && this.EmailAddress !== "")
+      {
+        return `${this.FullName},${this.ContactNumber},${this.EmailAddress}`;
+      }
+      else 
+      {
+        console.error("One or more properties of the Contact is empty");
+        return null;
+      }
     }
 
     /**
@@ -91,8 +99,8 @@ class Contact {
     deserialize(data)
     {
       let propertyArray = data.split(",");
-      this.fullName = propertyArray[0];
-      this.contactNumber = propertyArray[1];
-      this.emailAddress = propertyArray[2];
+      this.FullName = propertyArray[0];
+      this.ContactNumber = propertyArray[1];
+      this.EmailAddress = propertyArray[2];
     }
   }
