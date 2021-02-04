@@ -6,7 +6,7 @@
 
 "use strict";
 
-(function()
+((core) =>
 {
     function displayHome()
     {
@@ -77,39 +77,34 @@
 
     function displayContact()
     {
-        let messageArea = document.getElementById("messageArea");
-        messageArea.hidden = true;
+        $("#messageArea").hide();
 
-        // form validation
-        let fullName = document.getElementById("fullName");
-        fullName.addEventListener("blur", function() {
-            if(fullName.value.length < 2)
-            {
-                fullName.focus();
-                fullName.select();
-                messageArea.hidden = false;
-                messageArea.className = "alert alert-danger";
-                messageArea.textContent = "Please enter an appropriate Name";
-            }
-            else
-            {
-                messageArea.removeAttribute("class");
-                messageArea.hidden = true;
-            }
-        });
+        $("#fullName").on("blur", () => {
+          if($("#fullName").val().length < 2)
+          {
+              $("#fullName").trigger("focus");
+              $("#fullName").trigger("select");
 
-        let sendButton = document.getElementById("sendButton");
-        sendButton.addEventListener("click", function(event){
-            //event.preventDefault();
-            
-            let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+              $("#messageArea").show();
+              $("#messageArea").addClass("alert alert-danger");
+              $("#messageArea").text("Please enter an appropriate Name");
+          }
+          else
+          {
+            $("#messageArea").removeAttr("class");
+            $("#messageArea").hide();               
+          }
+        })
 
-            if(contact.serialize())
-            {
-              localStorage.setItem((localStorage.length + 1).toString(), contact.serialize());
-            }
-           
-        });
+
+        $("#sendButton").on("click", () => {
+          let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+
+          if(contact.serialize())
+          {
+            localStorage.setItem((localStorage.length + 1).toString(), contact.serialize());
+          }
+        });       
     }
 
     function displayContactList() 
@@ -166,9 +161,10 @@
             displayContactList();
           break;
         }
-        
     }
 
     window.addEventListener("load", Start);
 
-})();
+    core.Start = Start;
+
+})(core || (core={}));

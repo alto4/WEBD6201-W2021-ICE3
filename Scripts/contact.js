@@ -1,7 +1,11 @@
 "use strict";
 // Contact Class
 class Contact {
-    // getters and setters
+// Namespace with closure
+// (()=>{
+
+// })(core || (core={}));
+  // getters and setters
     get FullName() 
     {
       return this.m_fullName;
