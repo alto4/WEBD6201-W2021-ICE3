@@ -1,5 +1,7 @@
 "use strict";
 // Contact Class
+
+
 class Contact {
 // Namespace with closure
 // (()=>{
