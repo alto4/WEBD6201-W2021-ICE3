@@ -94,13 +94,18 @@
         });
 
 
-        $("#sendButton").on("click", () => {
-          let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
 
-          if(contact.serialize())
+        $("#sendButton").on("click", (e) => {
+          
+          if($("subscribeCheckbox").checked)
           {
-            localStorage.setItem((localStorage.length + 1).toString(), contact.serialize());
-          }
+            let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+
+            if(contact.serialize())
+            {
+              localStorage.setItem((localStorage.length + 1).toString(), contact.serialize());
+            }
+          }          
         });       
     }
 
@@ -119,15 +124,29 @@
           let contact = new Contact();
           contact.deserialize(contactData);
 
-          data += `<tr>
-          <th scope="row">${index + 1}</th>
-          <td>${contact.FullName}</td>
-          <td>${contact.ContactNumber}</td>
-          <td>${contact.EmailAddress}</td>
-        </tr>`;
+          data += `
+            <tr>
+              <th scope="row">${index + 1}</th>
+              <td>${contact.FullName}</td>
+              <td>${contact.ContactNumber}</td>
+              <td>${contact.EmailAddress}</td>
+              <td class="text-center"><button value="${index + 1}" class="btn btn-sm btn-success edit"><i class="fa fa-edit fa-sm"></i> Edit</button></td>
+              <td class="text-center"><button value="${index + 1}" class="btn btn-sm btn-danger delete"><i class="fa fa-trash-alt fa-sm"></i> Delete</button></td>
+            </tr>`;         
         }
-
         contactList.innerHTML = data;
+        
+        // TODO: Create edit page
+        $("button.edit").on("click", function(){
+            console.log($(this).val());
+        });
+
+        // TODO: reindex all localStorage entries before re-rendering to avoid null errors
+        $("button.delete").on("click", function(){
+          localStorage.removeItem($(this).val());
+          // Refresh the page upon delete
+          location.href = "contact-list.html";
+        });
       }
     }
 
