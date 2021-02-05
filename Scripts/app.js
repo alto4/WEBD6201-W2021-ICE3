@@ -10,8 +10,7 @@
 {
     function displayHome()
     {
-        let paragraphOneText =
-          "This is a simple site to demonstrate DOM Manipulation for ICE 1";
+        let paragraphOneText = "This is a simple site to demonstrate DOM Manipulation for ICE 1";
 
         let paragraphOneElement = document.getElementById("paragraphOne");
 
@@ -35,12 +34,6 @@
         let paragraphThree = `<p id="paragraphThree" class="fs-7 fw-bold">And this is the Third Paragraph</p>`;
         paragraphDiv.innerHTML = paragraphThree;
 
-        // insertions
-
-        // example of inserting before a node
-        //newParagraph.before(paragraphDiv);
-
-        // example of inserting after a node
         newParagraph.after(paragraphDiv);
 
         // deletions
@@ -79,8 +72,8 @@
     {
         let messageArea = $("#messageArea").hide();
 
-        $("#fullName").on("blur", function() {
-
+        $("#fullName").on("blur", function() 
+        {
           if($(this).val().length < 2)
           {
               $(this).trigger("focus").trigger("select");
@@ -93,13 +86,11 @@
           }
         });
 
-
-
         $("#sendButton").on("click", (e) => {
           
-          if($("subscribeCheckbox").checked)
+          if($("#subscribeCheckbox")[0].checked)
           {
-            let contact = new Contact(fullName.value, contactNumber.value, emailAddress.value);
+            let contact = new core.Contact(fullName.value, contactNumber.value, emailAddress.value);
 
             if(contact.serialize())
             {
@@ -121,7 +112,7 @@
         {
           let contactData = localStorage.getItem((index + 1).toString());
 
-          let contact = new Contact();
+          let contact = new core.Contact();
           contact.deserialize(contactData);
 
           data += `
@@ -136,16 +127,19 @@
         }
         contactList.innerHTML = data;
         
-        // TODO: Create edit page
+        // @TODO: Create edit page
         $("button.edit").on("click", function(){
             console.log($(this).val());
         });
 
-        // TODO: reindex all localStorage entries before re-rendering to avoid null errors
+        // @TODO: reindex all localStorage entries before re-rendering to avoid null errors
         $("button.delete").on("click", function(){
-          localStorage.removeItem($(this).val());
-          // Refresh the page upon delete
-          location.href = "contact-list.html";
+          if(confirm("Are you sure?"))
+          {
+            localStorage.removeItem($(this).val());
+            // Refresh the page upon delete
+            location.href = "contact-list.html";
+          }
         });
       }
     }

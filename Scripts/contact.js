@@ -1,13 +1,11 @@
 "use strict";
-// Contact Class
 
-
-class Contact {
 // Namespace with closure
-// (()=>{
-
-// })(core || (core={}));
-  // getters and setters
+(()=>{
+  
+  // Contact Class
+  class Contact {
+    // getters and setters
     get FullName() 
     {
       return this.m_fullName;
@@ -110,3 +108,7 @@ class Contact {
       this.EmailAddress = propertyArray[2];
     }
   }
+
+  core.Contact = Contact;
+
+})(core || (core={}));
